@@ -13,8 +13,8 @@ import (
 func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
-		slog.Info("environment variable PORT was not set, defaulting to 8080")
-		port = "8080"
+		slog.Info("environment variable PORT was not set, defaulting to 9090")
+		port = "9090"
 	}
 
 	debug := os.Getenv("DEBUG")
@@ -25,7 +25,9 @@ func main() {
 
 	svc := internals.NewReverseService(&internals.NoOPDB{})
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+
 		reversed, err := svc.ReverseIP(r)
+
 		if err != nil {
 			slog.Error("Failed reverse service", err)
 			if errors.Is(err, &internals.NotImplementedError{}) {
