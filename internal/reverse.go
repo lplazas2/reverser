@@ -28,7 +28,7 @@ func (s *ReverseService) ReverseIP(r *http.Request) (string, error) {
 
 	// if there is more than one originating IP, select the leftmost: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For#proxy1_proxy2
 	if strings.Contains(ip, ",") {
-		slog.Warn("received many IPs", ip)
+		slog.Warn("received many IPs", "ips", ip)
 		ip = strings.TrimSpace(strings.Split(ip, ",")[0])
 	}
 
@@ -39,7 +39,7 @@ func (s *ReverseService) ReverseIP(r *http.Request) (string, error) {
 
 	ipAdd := net.ParseIP(ip)
 	if ipAdd == nil {
-		slog.Error("failed ip is", ip)
+		slog.Error("failed ip is", "ip", ip)
 		return "", fmt.Errorf("failed parsing ip address")
 	}
 
