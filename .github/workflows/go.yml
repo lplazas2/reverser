@@ -53,7 +53,7 @@ jobs:
           gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
 
       - name: Build image
-        run: IMG_TAG=$GITHUB_HEAD_REF make docker-build
+        run: make docker-build IMG_TAG=$GITHUB_HEAD_REF
 
       - name: Push image
-        run: IMG_TAG=$GITHUB_HEAD_REF make docker-push
+        run: make docker-push IMG_TAG=$GITHUB_HEAD_REF
