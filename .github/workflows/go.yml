@@ -33,6 +33,7 @@ jobs:
       run: go test -v ./...
 
   image-build:
+    environment: CI
     runs-on: ubuntu-latest
     steps:
       - id: "auth"
