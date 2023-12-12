@@ -3,6 +3,11 @@
 
 name: Go
 
+env:
+  PROJECT_ID: bamboo-copilot-407420
+  REGION: eu-west1
+  GAR_LOCATION: europe-west1-docker.pkg.dev/bamboo-copilot-407420/prod-europe-west1-registry/reverser:latest
+
 on:
   push:
     branches: [ "master" ]
@@ -26,3 +31,27 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+
+  image-build:
+    runs-on: ubuntu-latest
+    steps:
+      - id: "auth"
+        uses: "google-github-actions/auth@v1"
+        with:
+          credentials_json: "${{ secrets.SERVICE_ACCOUNT_KEY }}"
+
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v1"
+
+      - name: "Use gcloud CLI"
+        run: "gcloud info"
+
+      - name: "Docker auth"
+        run: |-
+          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+
+      - name: Build image
+        run: make docker-build
+
+      # - name: Push image
+        # run: docker push ${{ env.GAR_LOCATION }}
