@@ -8,7 +8,7 @@ Run `make run` to run the image locally, the registry being used is publicly rea
   - `curl http://34.149.5.56 -H "X-Forwarded-For:50.159.22.10"`
 - Run `make help` in the base directory for general local dev functionality
 
-## Repo structure: 
+## Repo structure
 
 * `./terraform`: contains all IaaC
   * `live/`: contains live code applied to Google Cloud.
@@ -18,7 +18,11 @@ Run `make run` to run the image locally, the registry being used is publicly rea
   * `reverser/`: Helm chart for the reverser app.
 * `./internal`: contains the Go code with the application, see also `./main.go`
 
-## Future work / improvements:
+## Architecture
+
+TODO insert a diagram
+
+## Future work / improvements
 - Setup an actual DB, think about distributed state
 - Organize and setup tf modules and live code for large scale infra (separate repos)
 - Setup centralized telemetry for the service(s)
