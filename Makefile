@@ -18,7 +18,7 @@ kubectl-setup: ## Setup kubectl auth
 	gcloud container clusters get-credentials prod-europe-west1-cluster --region ${REGION} --project ${GCP_PROJECT_ID}
 
 .PHONY: config-registry
-config-registry: ## Local config registry
+auth-registry: ## Local config registry
 	gcloud auth configure-docker ${REGISTRY_BASE_DOMAIN}
 
 bin/reverser: ## Build reverser locally

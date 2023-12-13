@@ -42,15 +42,15 @@ jobs:
         with:
           credentials_json: "${{ secrets.SERVICE_ACCOUNT_KEY }}"
 
-      - name: "Set up Cloud SDK"
+      - name: "Set up gcloud SDK"
         uses: "google-github-actions/setup-gcloud@v1"
 
-      - name: "Use gcloud CLI"
-        run: "gcloud info"
+      - name: "Verify gcloud CLI"
+        run: "gcloud info && gcloud components update"
 
-      - name: "Docker auth"
+      - name: "Docker registry auth"
         run: |-
-          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+          make auth-registry
 
       - name: Build image
         run: make docker-build IMG_TAG=${{ github.ref_name }}
