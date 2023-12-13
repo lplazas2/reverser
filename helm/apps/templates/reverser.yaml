@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guestbook
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: prod-reverser
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: helm/reverser
+    repoURL: https://github.com/lplazas2/reverser
+    targetRevision: HEAD
