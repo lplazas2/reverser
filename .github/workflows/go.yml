@@ -32,11 +32,11 @@ jobs:
     - name: Test
       run: go test -v ./...
 
-    - name: Install golint
-      run: go install golang.org/x/lint/golint@latest
-
-    - name: Run golint
-      run: golint ./...
+    - name: golangci-lint
+      uses: golangci/golangci-lint-action@v3
+      with:
+        version: v1.54
+        only-new-issues: true
 
   image-build:
     environment: CI
