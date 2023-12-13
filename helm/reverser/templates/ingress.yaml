@@ -1,0 +1,10 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "namespaced_svcName" . }}-ing
+spec:
+  defaultBackend:
+    service:
+      name: {{ include "namespaced_svcName" . }}-svc
+      port:
+        number: {{ .Values.service.port }}

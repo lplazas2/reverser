@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "namespaced_svcName" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "namespaced_svcName" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "namespaced_svcName" . }}
+    spec:
+      containers:
+        - name: reverser
+          env:
+            - name: PORT
+              value: "{{ .Values.image.exposePort }}"
+          image: "{{ .Values.image.repository }}/{{ .Values.image.projectName }}/{{ .Values.image.registryName }}/{{ .Values.image.imgName }}:{{ .Values.image.tag }}"
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+          ports:
+            - containerPort: {{ .Values.image.exposePort }}
+              protocol: TCP
